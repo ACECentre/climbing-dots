@@ -131,7 +131,7 @@ function loadSettings(System, cb) {
  * @return {Object} Returns the connection object
  */
 var dbConnect = function() {
-  var db = mongoose.connect(Config.db);
+  var db =  mongoose.connect(config.mongo.uri, config.mongo.options);
   return db;
 };
 

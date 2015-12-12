@@ -5,6 +5,19 @@ module.exports = {
   REQUESTS_DELAY_SYSTEM: 0,
   baseURL: process.env.BASEURL,
   db: 'mongodb://localhost:27017/' + (process.env.DB || 'climbing_dots'),
+  mongo: {
+    uri:    process.env.MONGOLAB_URI ||
+            process.env.MONGOHQ_URL ||
+            process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
+            'mongodb://localhost/climbing_dots',
+    options: {
+      user: process.env.MONGO_USER ||
+            '',
+      pass: process.env.MONGO_PASS ||
+            '',
+      replset: { rs_name: process.env.MONGO_REPLSET || '' }
+      }
+  }
   server: {
     host: 'localhost',
     port: process.env.PORT || 8111
