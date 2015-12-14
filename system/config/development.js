@@ -17,7 +17,7 @@ module.exports = {
             '',
       replset: { rs_name: process.env.MONGO_REPLSET || '' }
       }
-  }
+  },
   server: {
     host: 'localhost',
     port: 8000
