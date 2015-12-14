@@ -4,7 +4,7 @@ module.exports = {
   REQUESTS_DELAY: 0,
   REQUESTS_DELAY_SYSTEM: 0,
   baseURL: process.env.BASEURL,
-  db: 'mongodb://localhost:27017/' + (process.env.DB || 'climbing_dots'),
+  db: process.env.MONGOHQ_URL || 'mongodb://' + (process.env.DB_PORT_27017_TCP_ADDR || 'localhost') + '/climbingdots',
   mongo: {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
