@@ -13,6 +13,7 @@ var multer = require('multer');
 var morgan = require('morgan');
 var path = require('path');
 var nodemailer = require('nodemailer');
+var mandrillTransport = require('nodemailer-mandrill-transport');
 var _ = require('lodash');
 
 /**
@@ -115,13 +116,13 @@ function loadSettings(System, cb) {
     settings.map(function(setting) {
       System.settings[setting.name] = setting.value;
     });
-    System.mailer = nodemailer.createTransport({
-      service: Config.settings.email.service,
+    
+    System.mailer = nodemailer.createTransport(mandrillTransport({
       auth: {
-        user: Config.settings.email.emailAddress,
-        pass: Config.settings.email.emailPassword
+         apiKey: Config.settings.email.mandrillKey
       }
-    });
+      }));
+    
     cb();
   });
 }
