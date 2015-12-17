@@ -28,8 +28,7 @@ module.exports = {
   	email: {
   		service: 'Gmail',
   		emailAddress: process.env.EMAILADD,
-  		emailPassword: process.env.EMAILPASS,
-      mandrillKey: process.env.MANDRILL_KEY
+  		emailPassword: process.env.EMAILPASS
   	}
   },
   aws: {
