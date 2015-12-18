@@ -347,7 +347,7 @@ module.exports = function(System) {
     var email = req.query.email;
     User.findOne({email: email}, function(err, user) {
       if (err || !user) {
-
+        return json.unhappy({message: 'Email not found'}, res);
       } else {
         /**
          * Send activation email
@@ -569,7 +569,7 @@ module.exports = function(System) {
     /**
      * Can accept user's username
      */
-    criteria.username = req.params.userId;
+    criteria._id = req.params.userId;
 
     User.findOne(criteria).populate('following').exec(function(err, user) {
       if (err) {

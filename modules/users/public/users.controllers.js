@@ -70,7 +70,7 @@ angular.module('delicious.users')
         appStorage.set('user', serializedUser);
         appStorage.set('userToken', token);
         $rootScope.$broadcast('loggedIn');
-        appLocation.url('/profile/' + user.username + '/change-password');
+        appLocation.url('/profile/' + user._id + '/change-password');
       };
 
     }
