@@ -201,14 +201,8 @@ module.exports = function(System) {
     if (req.body.password) {
       user.password = req.body.password;
     }
-    var updates = {
-      name: req.body.name
-    };
-    if (req.body.password) {
-      updates.password = req.body.password;
-    }
 
-    User.update({_id: req.params.userId}, updates, function(err) {
+    return user.save(function(err) {
       if (err) {
         return json.unhappy(err, res);
       }
