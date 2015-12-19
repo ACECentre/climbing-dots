@@ -505,7 +505,7 @@ angular.module('delicious.users')
       $scope.login = function(isValid) {
         if (isValid) {
           var auth = new appUsers.auth({
-            email: 'ritensv@gmail.com', //hardcode for now, later, there will be no user
+            email: this.email,
             password: this.password
           });
           auth.$save(function(response) {
