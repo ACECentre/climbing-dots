@@ -58,5 +58,13 @@ You can look at any way you want of hosting this node/mongo/angular stack. The e
 - @phewett for the original conception 
 - @ritenv who coded the majority as a fork to his :)
 
+## Getting Involved
+
+In order to start contributing code to the project, follow the steps below:
+
+1. Fork this repo. For detailed instructions visit [http://help.github.com/fork-a-repo/](http://help.github.com/fork-a-repo/)
+2. Hack away! but please make sure you follow [this branching model] (http://nvie.com/posts/a-successful-git-branching-model/). That means, make your pull requests against the **develop** branch, not the **master** branch.
+
+
 ## Licence
 
