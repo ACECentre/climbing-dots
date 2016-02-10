@@ -158,8 +158,8 @@ module.exports = function(System) {
           password: req.body.password,
           attachments: _.pluck(req.body.attachments, '_id'),
           criticalText: req.body.criticalText,
-          shortUrl: record.shortUrl,
-          shortUrlHash: record.shortUrlHash
+          shortUrl: record.shortUrl ? record.shortUrl : '',
+          shortUrlHash: record.shortUrlHash ? record.shortUrlHash : ''
         };
 
         Collections.update({_id: req.body._id}, updates, function(err) {
@@ -169,22 +169,6 @@ module.exports = function(System) {
           return json.happy(req.body, res);
         });
       }
-      // Collections.findOne({_id: req.body._id}, function(err, record) {
-      //   if (err || !record) {
-      //     return json.unhappy({error: err, record: record}, res);
-      //   }
-        
-      //   // record.introText = req.body.introText;
-
-      //   return record.update(function(err, record) {
-      //     if (err || !record) {
-      //       return json.unhappy({error: err, record: record}, res);
-      //     }
-
-      //     console.log(arguments);
-      //     return json.happy(record, res);
-      //   })
-      // })
     }
 
     function getBitLy(record, cb) {
