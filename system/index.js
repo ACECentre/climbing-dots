@@ -125,10 +125,10 @@ function loadSettings(System, cb) {
       }));
    } else {
       System.mailer = nodemailer.createTransport({
-        service: Config.settings.email.service,
-        auth: {
-           user: Config.settings.email.emailAddress,
-           pass: Config.settings.email.emailPassword
+       service: process.env.EMAIL-SERVICE,
+       auth: {
+          user: process.env.EMAIL-EMAILADDRESS,
+          pass: process.env.EMAIL-EMAILPASSWORD
         }
        });
     }
