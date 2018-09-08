@@ -24,11 +24,11 @@ module.exports = function(System) {
       SystemSettings
       .find(criteria, null, {sort: {name: 1}})
       .lean()
-      .exec(function(err, items) {
-        if (err) {
-          return json.unhappy(err, res);
-        }
-        return json.happy({ items: items }, res);
+      .then((items) => {
+        json.happy({ items: items }, res);
+      })
+      .catch((err) => {
+        json.unhappy(err, res);
       });
     }
   });
@@ -64,10 +64,7 @@ module.exports = function(System) {
       var saveSetting = function(setting, cb) {
         SystemSettings
         .findOne({name: setting.key})
-        .exec(function(err, item) {
-          if (err) {
-            return json.unhappy(err, res);
-          }
+        .then((items) => {
           if (item) {
             item.value = setting.val;
           } else {
@@ -78,6 +75,9 @@ module.exports = function(System) {
           item.save(function(err) {
             cb(err);
           });
+        })
+        .catch((err) => {
+          json.unhappy(err, res);
         });
       };
 
