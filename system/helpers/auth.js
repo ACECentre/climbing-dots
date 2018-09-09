@@ -12,12 +12,16 @@ var ensureAuthorized = function(req, res, next) {
     
     User.findOne({token: req.token})
     .populate('following')
-    .exec(function(err, user) {
-      if (err || !user) {
+    .then((user) => {
+      if (!user) {
         return res.sendStatus(403);
       }
       req.user = user;
       next();
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(403);
     });
   } else {
     res.sendStatus(403);
@@ -35,12 +39,17 @@ var justGetUser = function(req, res, next) {
     req.token = bearerToken;
     //populate({path: 'following', select: 'name email'}).
     
-    User.findOne({token: req.token}).exec(function(err, user) {
-      if (user) {
-        req.user = user;
-      }
-      next();
-    });
+    User.findOne({token: req.token})
+      .then((user) => {
+        if (user) {
+          req.user = user;
+        }
+        next();
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
   }
 };
 

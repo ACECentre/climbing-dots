@@ -9,15 +9,15 @@
 
 	      	<span flex></span>
 	      	<md-menu class=" no-margin" ng-if="selectedIds.length">
-				<md-button class="md-primary no-margin no-case" ng-mouseover="$mdOpenMenu($event)">Add {{selectedIds.length}} links to collection...</md-button>
-				<md-menu-content width="4">
-					<md-menu-item ng-repeat="collection in collections">
-			          <md-button ng-click="attach(collection)">
-			            {{collection.title}} ({{collection.identifier}})
-			          </md-button>
-			        </md-menu-item>
-				</md-menu-content>
-	      	</md-menu>
+            <md-button class="md-primary no-margin no-case" ng-click="$mdOpenMenu($event)" ng-mouseover="$mdOpenMenu($event)">Add {{selectedIds.length}} links to collection...</md-button>
+            <md-menu-content width="4">
+              <md-menu-item ng-repeat="collection in collections">
+                <md-button ng-click="attach(collection)">
+                  {{collection.title}} ({{collection.identifier}})
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
 	      	<span flex="5"></span>
 	      	<md-button href="/admin/links/add" class="md-primary md-raised no-margin">
 	  		  Add New

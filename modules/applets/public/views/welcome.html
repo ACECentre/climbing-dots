@@ -1,12 +1,13 @@
 <div layout="column" flex>
   <div layout="row">
-    <md-card flex="40" flex-sm="100">
+    <md-card flex="60" flex-sm="100">
       <md-card-content>
         <h2>Welcome!</h2>
         <p>If you know the link to your application, enter it in the browser now. If you have lost it, please contact <a href="mailto:enquiries@acecentre.org.uk">enquiries@acecentre.org.uk</a> to get your customized link.</p>
         <p class="invalid" ng-if="params.incorrect">
           <span class="fa fa-times-circle"></span> That was an invalid password. <a ng-click="goBack()">Try again?</a>
         </p>
+        <p><a ng-href="/admin">Goto admin</a></p>
       </md-card-content>
     </md-card>
   </div>
@@ -16,4 +17,6 @@
     </md-button>
   </add-icon> -->
 </div>
-<img src="/images/logo-main.png" class="logo" hide-sm hide-xs style="width: 200px !important;">
+<div>
+  <img src="/images/logo-main.png" class="welcome-logo" hide-sm hide-xs>
+</div>

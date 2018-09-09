@@ -111,29 +111,33 @@ function systemRoutes(System) {
  * @return {Void}
  */
 function loadSettings(System, cb) {
-  SystemSettings.find({}).exec(function(err, settings) {
-    if (err) throw err;
-    settings.map(function(setting) {
-      System.settings[setting.name] = setting.value;
+  SystemSettings.find({})
+    .then((settings) => {
+      settings.map(function(setting) {
+        System.settings[setting.name] = setting.value;
+      });
+      
+      if (Config.settings.email.service == "Mandrill"){
+        System.mailer = nodemailer.createTransport(mandrillTransport({
+          auth: {
+            apiKey: Config.settings.email.mandrillKey
+          }
+        }));
+      } else {
+        System.mailer = nodemailer.createTransport({
+          service: process.env.EMAIL_SERVICE,
+          auth: {
+            user: process.env.EMAIL_ADDRESS,
+            pass: process.env.EMAIL_PASSWORD
+          }
+        });
+      }
+      cb();
+    })
+    .catch((err) => {
+      console.error(err);
+      process.exit(-1);
     });
-    
-    if (Config.settings.email.service == "Mandrill"){
-      System.mailer = nodemailer.createTransport(mandrillTransport({
-        auth: {
-           apiKey: Config.settings.email.mandrillKey
-        }
-      }));
-   } else {
-      System.mailer = nodemailer.createTransport({
-       service: process.env.EMAIL-SERVICE,
-       auth: {
-          user: process.env.EMAIL-EMAILADDRESS,
-          pass: process.env.EMAIL-EMAILPASSWORD
-        }
-       });
-    }
-    cb();
-  });
 }
 
 /**
@@ -142,7 +146,11 @@ function loadSettings(System, cb) {
  */
 var dbConnect = function() {
   //var db =  mongoose.connect(Config.mongo.uri, Config.mongo.options);
-  var db = mongoose.connect(Config.db);
+  var db = mongoose.connect(Config.db, { useNewUrlParser: true })
+    .catch((err) => {
+      console.error("mongoose connect failure: ", err);
+      process.exit(-1);
+    });
   return db;
 };
 
