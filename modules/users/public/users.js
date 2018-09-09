@@ -16,10 +16,10 @@ angular.module('delicious.users', ['delicious.system'])
           /**
            * FIXME: convert this to an ngResource call
            */
-          $http.get('/users/me').success(function(response) {
-            var serializedUser = angular.toJson(response.res.record);
+          $http.get('/users/me').then(function(response) {
+            var serializedUser = angular.toJson(response.data.res.record);
             appStorage.set('user', serializedUser);
-            cb(response.res.record);
+            cb(response.data.res.record);
           });
         },
         getUser: function() {

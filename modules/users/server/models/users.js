@@ -17,18 +17,24 @@ var validatePresenceOf = function(value) {
   return (this.provider && this.provider !== 'local') || (value && value.length);
 };
 
-var validateUniqueEmail = function(value, callback) {
-  var User = mongoose.model('User');
-  User.find({
-    $and: [{
-      email: new RegExp('^' + value + '$', 'i')
-    }, {
-      _id: {
-        $ne: this._id
+var validateUniqueEmail = function(value) {
+  return new Promise((resolve, reject) => {
+    var User = mongoose.model('User');
+    User.find({
+      $and: [{
+        email: new RegExp('^' + value + '$', 'i')
+      }, {
+        _id: {
+          $ne: this._id
+        }
+      }]
+    }, function(err, user) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(user.length === 0);
       }
-    }]
-  }, function(err, user) {
-    callback(err || user.length === 0);
+    });
   });
 };
 
@@ -386,7 +392,7 @@ UserSchema.methods = {
   hashPassword: function(password) {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
-    return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+    return crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha1').toString('base64');
   },
 
   /**
